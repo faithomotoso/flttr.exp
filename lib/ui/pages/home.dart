@@ -26,7 +26,7 @@ class HomePage extends StatelessWidget {
             CustomButton(
                 buttonText: "To custom button page?",
                 onTap: () {
-                  // context.goNamed(CustomButtonPage.routeName);
+                  context.goNamed(CustomButtonPage.routeName);
                 })
           ],
         ),

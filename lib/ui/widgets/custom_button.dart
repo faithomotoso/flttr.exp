@@ -21,6 +21,8 @@ class _CustomButtonState extends State<CustomButton>
   late AnimationController translateController;
   late Animation<Offset> offsetAnimation;
   final Offset shadowOffset = const Offset(6, 6);
+  final ValueNotifier<bool> isHovering = ValueNotifier(false);
+  final Color hoverColor = Color.alphaBlend(Colors.pink.withOpacity(0.1), Colors.white);
 
   @override
   void initState() {
@@ -42,24 +44,19 @@ class _CustomButtonState extends State<CustomButton>
   @override
   Widget build(BuildContext context) {
     return Container(
-      // width: 100,
-      // height: 100,
-      // padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
       decoration: BoxDecoration(
           color: Colors.transparent,
           boxShadow: [
             BoxShadow(color: Colors.pink, offset: shadowOffset),
           ],
           borderRadius: BorderRadius.circular(14)),
-      // duration: const Duration(milliseconds: 300),
       child: AnimatedBuilder(
         animation: translateController,
         builder: (ctx, child) {
-          return GestureDetector(
+          return InkWell(
               onTapDown: (details) {
                 // print("On tap");
                 translateController.forward();
-                widget.onTap();
               },
               onTapCancel: () {
                 // print("On tap cancel");
@@ -68,20 +65,30 @@ class _CustomButtonState extends State<CustomButton>
               onTapUp: (details) {
                 // print("On tap up");
                 translateController.reverse();
+                widget.onTap();
               },
+              onHover: (h) {
+                isHovering.value = h;
+              },
+              overlayColor: const MaterialStatePropertyAll<Color>(Colors.transparent),
               child: Transform.translate(
                   offset: offsetAnimation.value,
                   child: child));
         },
-        child: Container(
-          padding: const EdgeInsets.symmetric(
-              vertical: 20, horizontal: 10),
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(14),
-              border: Border.all(color: Colors.black)),
-          // constraints: const BoxConstraints(minWidth: 100),
-          child: Text(widget.buttonText),
+        child: ValueListenableBuilder<bool>(
+          valueListenable: isHovering,
+          builder: (ctx, hovering, child) {
+            return AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              padding: const EdgeInsets.symmetric(
+                  vertical: 20, horizontal: 10),
+              decoration: BoxDecoration(
+                  color: hovering ? hoverColor : Colors.white,
+                  borderRadius: BorderRadius.circular(14),
+                  border: Border.all(color: Colors.black)),
+              child: Text(widget.buttonText),
+            );
+          },
         ),
       ),
     );
