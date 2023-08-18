@@ -1,3 +1,4 @@
+import 'package:flttr_exp/ui/pages/sliver_list_w_headers.dart';
 import 'package:flttr_exp/ui/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -27,7 +28,12 @@ class HomePage extends StatelessWidget {
                 buttonText: "To custom button page?",
                 onTap: () {
                   context.goNamed(CustomButtonPage.routeName);
-                })
+                }),
+            CustomButton(
+                buttonText: "To slivers page",
+                onTap: () {
+                  context.goNamed(SliverListWHeaders.routeName);
+                }),
           ],
         ),
       ),
