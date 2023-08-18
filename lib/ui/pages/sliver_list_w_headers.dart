@@ -27,68 +27,58 @@ class _SliverListWHeadersState extends State<SliverListWHeaders> {
         child: CustomScrollView(
           slivers: [
             MultiSliver(
+              pushPinnedChildren: true,
               children: [
-                SliverPersistentHeader(
-                    delegate: HeadingPersistentDelegate(color: Colors.yellow), pinned: false),
-
-                SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    childCount: 50,
-                        (context, index) => Text("Index $index"),
+                SliverPinnedHeader(
+                  child: Container(
+                    color: Colors.white,
+                    child: Text("Heading 1"),
                   ),
                 ),
 
-                // SliverToBoxAdapter(child: SmallListConfig()),
-
-                SliverPersistentHeader(
-                    delegate: HeadingPersistentDelegate(color: Colors.purple), pinned: true),
                 SliverList(
                   delegate: SliverChildBuilderDelegate(
                     childCount: 50,
-                        (context, index) => Text("Index $index"),
+                    (context, index) => Text("Index $index"),
                   ),
                 ),
-
-                // SliverToBoxAdapter(child: SmallListConfig()),
-                // SliverToBoxAdapter(child: SmallListConfig()),
-
                 SliverPersistentHeader(
-                    delegate: HeadingPersistentDelegate(color: Colors.blue), pinned: true),
+                    delegate: HeadingPersistentDelegate(color: Colors.purple),
+                    pinned: true),
                 SliverList(
                   delegate: SliverChildBuilderDelegate(
                     childCount: 50,
-                        (context, index) => Text("Index $index"),
+                    (context, index) => Text("Index $index"),
+                  ),
+                ),
+                SliverPersistentHeader(
+                    delegate: HeadingPersistentDelegate(color: Colors.blue),
+                    pinned: true),
+                SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    childCount: 50,
+                    (context, index) => Text("Index $index"),
                   ),
                 )
               ],
-            )
+            ),
+            MultiSliver(children: [
+              SliverPinnedHeader(
+                child: Container(
+                  color: Colors.white,
+                  child: Text("Heading 1"),
+                ),
+              ),
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  childCount: 50,
+                  (context, index) => Text("Index $index"),
+                ),
+              ),
+            ])
           ],
         ),
       ),
-    );
-  }
-}
-
-class SmallListConfig extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return CustomScrollView(
-      shrinkWrap: true,
-      primary: false,
-      slivers: [
-        SliverPersistentHeader(
-            delegate: HeadingPersistentDelegate(), pinned: true),
-        // SliverAppBar(
-        //   title: Text("Title 1"), pinned: true, primary: false,
-        // ),
-
-        SliverList(
-          delegate: SliverChildBuilderDelegate(
-            childCount: 50,
-            (context, index) => Text("Index $index"),
-          ),
-        )
-      ],
     );
   }
 }
@@ -97,10 +87,12 @@ class HeadingPersistentDelegate extends SliverPersistentHeaderDelegate {
   final Color color;
 
   HeadingPersistentDelegate({this.color = Colors.green});
+
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
-    print("Color ${this.color.toString()}: Shrink offset: $shrinkOffset, overlapsContent: $overlapsContent");
+    print(
+        "Color ${this.color.toString()}: Shrink offset: $shrinkOffset, overlapsContent: $overlapsContent");
 
     return Container(
         padding: const EdgeInsets.symmetric(vertical: 20),
@@ -112,16 +104,13 @@ class HeadingPersistentDelegate extends SliverPersistentHeaderDelegate {
   }
 
   @override
-  // TODO: implement maxExtent
   double get maxExtent => 30;
 
   @override
-  // TODO: implement minExtent
-  double get minExtent => 20;
+  double get minExtent => 30;
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
-    return true;
+    return false;
   }
-
 }
