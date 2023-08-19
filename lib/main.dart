@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
       routerConfig: goRouterConfiguration,
       title: 'Flttr Exp',
       theme: ThemeData(
+        useMaterial3: true,
         primarySwatch: Colors.orange,
       ),
     );
