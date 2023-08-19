@@ -18,7 +18,7 @@ class MessageWidget extends StatelessWidget {
     return SlideTransition(
       position: animation.drive(
           Tween<Offset>(begin: Offset(0, 0.5), end: Offset(0, 0))
-              .chain(CurveTween(curve: Curves.fastLinearToSlowEaseIn))),
+              .chain(CurveTween(curve: Curves.fastOutSlowIn))),
       child: Align(
         alignment: messageModel.isMeSender
             ? AlignmentDirectional.centerEnd

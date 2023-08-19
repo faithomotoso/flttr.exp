@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flttr_exp/ui/widgets/message_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
@@ -24,7 +26,7 @@ class _AnimatedListExmpState extends State<AnimatedListExmp> {
     super.initState();
 
     // Prepopulate messages
-    messages.addAll([
+    messages..addAll([
       MessageModel(
         id: uuid.v4(),
         message: "Hi there",
@@ -46,7 +48,20 @@ class _AnimatedListExmpState extends State<AnimatedListExmp> {
           const Duration(minutes: 9),
         ),
       ),
-    ]);
+    ])..sort((m1, m2) => m2.createdAt.compareTo(m1.createdAt));
+
+    dummyBrainiac();
+  }
+
+  void dummyBrainiac() async {
+    // Simulate receiving messages at intervals
+    int seconds = Random().nextInt(30);
+
+    await Future.delayed(Duration(seconds: seconds));
+    int randomMsgIndex = Random().nextInt(messages.length - 1);
+    sendMessage(messages.elementAt(randomMsgIndex).message, isMeSender: false);
+
+    dummyBrainiac();
   }
 
   @override
@@ -62,6 +77,7 @@ class _AnimatedListExmpState extends State<AnimatedListExmp> {
             key: animatedListKey,
             controller: animatedListScrollController,
             initialItemCount: messages.length,
+            reverse: true,
             padding: EdgeInsets.symmetric(horizontal: 10),
             itemBuilder:
                 (BuildContext context, int index, Animation<double> animation) {
@@ -112,13 +128,10 @@ class _AnimatedListExmpState extends State<AnimatedListExmp> {
         createdAt: DateTime.now(),
         isMeSender: isMeSender);
 
-    messages.add(newMessage);
+    // Because we're using reverse - true on animated list
+    messages.insert(0, newMessage);
 
-    animatedListKey.currentState!.insertItem(messages.length - 1);
-
-    animatedListScrollController.animateTo(animatedListScrollController.position.maxScrollExtent,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.fastOutSlowIn);
+    animatedListKey.currentState!.insertItem(0);
   }
 }
 
