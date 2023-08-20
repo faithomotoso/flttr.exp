@@ -13,42 +13,69 @@ class AnimatedListExmp extends StatefulWidget {
   State<AnimatedListExmp> createState() => _AnimatedListExmpState();
 }
 
-class _AnimatedListExmpState extends State<AnimatedListExmp> {
+class _AnimatedListExmpState extends State<AnimatedListExmp>
+    with TickerProviderStateMixin {
   final GlobalKey<AnimatedListState> animatedListKey = GlobalKey();
   final Uuid uuid = Uuid();
   final List<MessageModel> messages = [];
   final TextEditingController composeMessageController =
       TextEditingController();
+
   final ScrollController animatedListScrollController = ScrollController();
+  final ScrollController listViewScrollController = ScrollController();
+
+  ScrollPhysics listPhysics = const AlwaysScrollableScrollPhysics();
+
+  AnimationController? newMessageAnimController;
+  String? newMessageId;
+
+  @override
+  void dispose() {
+    animatedListScrollController.dispose();
+    newMessageAnimController?.dispose();
+    listViewScrollController.dispose();
+
+    super.dispose();
+  }
 
   @override
   void initState() {
     super.initState();
 
+    listViewScrollController.addListener(() {
+      // setState(() {
+      //   listPhysics = listViewScrollController.position.extentBefore != 0
+      //       ? const AlwaysScrollableScrollPhysics()
+      //       : const NeverScrollableScrollPhysics();
+      // });
+    });
+
     // Prepopulate messages
-    messages..addAll([
-      MessageModel(
-        id: uuid.v4(),
-        message: "Hi there",
-        createdAt: DateTime.now().subtract(
-          const Duration(minutes: 13),
-        ),
-      ),
-      MessageModel(
+    messages
+      ..addAll([
+        MessageModel(
           id: uuid.v4(),
-          message: "How do you do?",
+          message: "Hi there",
           createdAt: DateTime.now().subtract(
-            const Duration(minutes: 11),
+            const Duration(minutes: 13),
           ),
-          isMeSender: false),
-      MessageModel(
-        id: uuid.v4(),
-        message: "Not bad",
-        createdAt: DateTime.now().subtract(
-          const Duration(minutes: 9),
         ),
-      ),
-    ])..sort((m1, m2) => m2.createdAt.compareTo(m1.createdAt));
+        MessageModel(
+            id: uuid.v4(),
+            message: "How do you do?",
+            createdAt: DateTime.now().subtract(
+              const Duration(minutes: 11),
+            ),
+            isMeSender: false),
+        MessageModel(
+          id: uuid.v4(),
+          message: "Not bad",
+          createdAt: DateTime.now().subtract(
+            const Duration(minutes: 9),
+          ),
+        ),
+      ])
+      ..sort((m1, m2) => m2.createdAt.compareTo(m1.createdAt));
 
     dummyBrainiac();
   }
@@ -72,20 +99,58 @@ class _AnimatedListExmpState extends State<AnimatedListExmp> {
       ),
       body: Column(
         children: [
+          // Expanded(
+          //     child: AnimatedList(
+          //   key: animatedListKey,
+          //   controller: animatedListScrollController,
+          //   initialItemCount: messages.length,
+          //   reverse: true,
+          //   padding: EdgeInsets.symmetric(horizontal: 10),
+          //   itemBuilder:
+          //       (BuildContext context, int index, Animation<double> animation) {
+          //     return Padding(
+          //       padding: const EdgeInsets.only(bottom: 8.0),
+          //       child: MessageWidget(
+          //           messageModel: messages.elementAt(index),
+          //           animation: animation),
+          //     );
+          //   },
+          // )),
+
+          // Using normal listview
           Expanded(
-              child: AnimatedList(
-            key: animatedListKey,
-            controller: animatedListScrollController,
-            initialItemCount: messages.length,
+              child: ListView.separated(
+            key: const PageStorageKey("messages.list.scrollable"),
+            controller: listViewScrollController,
+            itemCount: messages.length,
+            physics: listPhysics,
             reverse: true,
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            itemBuilder:
-                (BuildContext context, int index, Animation<double> animation) {
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
-                child: MessageWidget(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            separatorBuilder: (ctx, index) => const SizedBox(
+              height: 10,
+            ),
+            itemBuilder: (ctx, index) {
+              if (newMessageId != null &&
+                  messages
+                      .elementAt(index)
+                      .id == newMessageId) {
+                return SizeTransition(
+                  sizeFactor: CurvedAnimation(
+                      parent: newMessageAnimController!,
+                      curve: Curves.easeInOut),
+                  axisAlignment: -1,
+                  child: MessageWidget(
+                    key: ValueKey(messages
+                        .elementAt(index)
+                        .id),
                     messageModel: messages.elementAt(index),
-                    animation: animation),
+                  ),
+                );
+              }
+
+              return MessageWidget(
+                key: ValueKey(messages.elementAt(index).id),
+                messageModel: messages.elementAt(index),
               );
             },
           )),
@@ -129,9 +194,23 @@ class _AnimatedListExmpState extends State<AnimatedListExmp> {
         isMeSender: isMeSender);
 
     // Because we're using reverse - true on animated list
-    messages.insert(0, newMessage);
+    setState(() {
+      messages.add(newMessage);
+      messages.sort((m1, m2) => m2.createdAt.compareTo(m1.createdAt));
+      newMessageId = newMessage.id;
+      newMessageAnimController = AnimationController(
+          vsync: this, duration: const Duration(milliseconds: 300));
+    });
+    newMessageAnimController?.forward().then((value) {
+      if (mounted) {
+        setState(() {
+          newMessageAnimController = null;
+          newMessageId = null;
+        });
+      }
+    });
 
-    animatedListKey.currentState!.insertItem(0);
+    // animatedListKey.currentState!.insertItem(0);
   }
 }
 
