@@ -1,5 +1,6 @@
 import 'package:flttr_exp/ui/_ui.dart';
 import 'package:flttr_exp/ui/pages/animated_list_exmp.dart';
+import 'package:flttr_exp/ui/pages/contacts_page.dart';
 import 'package:flttr_exp/ui/pages/sliver_list_w_headers.dart';
 import 'package:go_router/go_router.dart';
 
@@ -21,6 +22,11 @@ final GoRouter goRouterConfiguration = GoRouter(routes: [
           name: AnimatedListExmp.routeName,
           path: AnimatedListExmp.routeName,
           builder: (ctx, state) => const AnimatedListExmp()
+        ),
+        GoRoute(
+          name: ContactsPage.routeName,
+          path: ContactsPage.routeName,
+          builder: (ctx, state) => const ContactsPage()
         )
       ]),
 ]);
