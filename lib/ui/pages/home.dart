@@ -4,6 +4,7 @@ import 'package:flttr_exp/ui/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import 'chips.dart';
 import 'contacts_page.dart';
 import 'custom_button_page.dart';
 
@@ -45,6 +46,11 @@ class HomePage extends StatelessWidget {
                 buttonText: "To contacts page",
                 onTap: () {
                   context.goNamed(ContactsPage.routeName);
+                }),
+            CustomButton(
+                buttonText: "To chips example",
+                onTap: () {
+                  context.goNamed(ChipsExample.routeName);
                 }),
           ],
         ),
