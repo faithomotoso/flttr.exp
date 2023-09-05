@@ -1,9 +1,12 @@
 import 'package:flttr_exp/ui/pages/phone_validator.dart';
+import 'package:flttr_exp/ui/pages/animated_list_exmp.dart';
 import 'package:flttr_exp/ui/pages/sliver_list_w_headers.dart';
 import 'package:flttr_exp/ui/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import 'chips.dart';
+import 'contacts_page.dart';
 import 'custom_button_page.dart';
 
 class HomePage extends StatelessWidget {
@@ -34,6 +37,21 @@ class HomePage extends StatelessWidget {
                 buttonText: "To slivers page",
                 onTap: () {
                   context.goNamed(SliverListWHeaders.routeName);
+                }),
+            CustomButton(
+                buttonText: "To animated list exmp page",
+                onTap: () {
+                  context.goNamed(AnimatedListExmp.routeName);
+                }),
+            CustomButton(
+                buttonText: "To contacts page",
+                onTap: () {
+                  context.goNamed(ContactsPage.routeName);
+                }),
+            CustomButton(
+                buttonText: "To chips example",
+                onTap: () {
+                  context.goNamed(ChipsExample.routeName);
                 }),
             CustomButton(
                 buttonText: "To Validator page",
