@@ -38,6 +38,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   go_router: ^10.0.0
   sliver_tools: ^0.2.12
+  libphonenumber: ^2.0.2
 
 dev_dependencies:
   flutter_test:

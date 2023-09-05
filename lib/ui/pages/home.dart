@@ -1,3 +1,4 @@
+import 'package:flttr_exp/ui/pages/phone_validator.dart';
 import 'package:flttr_exp/ui/pages/sliver_list_w_headers.dart';
 import 'package:flttr_exp/ui/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +34,11 @@ class HomePage extends StatelessWidget {
                 buttonText: "To slivers page",
                 onTap: () {
                   context.goNamed(SliverListWHeaders.routeName);
+                }),
+            CustomButton(
+                buttonText: "To Validator page",
+                onTap: () {
+                  context.goNamed(PhoneValidatorPage.routeName);
                 }),
           ],
         ),
