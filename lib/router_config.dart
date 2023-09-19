@@ -16,30 +16,24 @@ final GoRouter goRouterConfiguration = GoRouter(routes: [
             path: CustomButtonPage.routeName,
             builder: (ctx, state) => const CustomButtonPage()),
         GoRoute(
-          name: SliverListWHeaders.routeName,
-          path: SliverListWHeaders.routeName,
-          builder: (ctx, state) => const SliverListWHeaders()
-        ),
+            name: SliverListWHeaders.routeName,
+            path: SliverListWHeaders.routeName,
+            builder: (ctx, state) => const SliverListWHeaders()),
         GoRoute(
-          name: AnimatedListExmp.routeName,
-          path: AnimatedListExmp.routeName,
-          builder: (ctx, state) => const AnimatedListExmp()
-        ),
+            name: AnimatedListExmp.routeName,
+            path: AnimatedListExmp.routeName,
+            builder: (ctx, state) => const AnimatedListExmp()),
         GoRoute(
-          name: ContactsPage.routeName,
-          path: ContactsPage.routeName,
-          builder: (ctx, state) => const ContactsPage()
-        ),
+            name: ContactsPage.routeName,
+            path: ContactsPage.routeName,
+            builder: (ctx, state) => const ContactsPage()),
         GoRoute(
-          name: ChipsExample.routeName,
-          path: ChipsExample.routeName,
-          builder: (ctx, state) => const ChipsExample()
-        ),
-        ),
+            name: ChipsExample.routeName,
+            path: ChipsExample.routeName,
+            builder: (ctx, state) => const ChipsExample()),
         GoRoute(
-          name: PhoneValidatorPage.routeName,
-          path: PhoneValidatorPage.routeName,
-          builder: (ctx, state) => const PhoneValidatorPage()
-        ),
+            name: PhoneValidatorPage.routeName,
+            path: PhoneValidatorPage.routeName,
+            builder: (ctx, state) => const PhoneValidatorPage()),
       ]),
 ]);

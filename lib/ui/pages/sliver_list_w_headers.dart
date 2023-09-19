@@ -42,6 +42,12 @@ class _SliverListWHeadersState extends State<SliverListWHeaders> {
                     (context, index) => Text("Index $index"),
                   ),
                 ),
+                SliverPinnedHeader(
+                  child: Container(
+                    color: Colors.white,
+                    child: Text("Heading 1"),
+                  ),
+                ),
                 SliverPersistentHeader(
                     delegate: HeadingPersistentDelegate(color: Colors.purple),
                     pinned: true),
@@ -62,17 +68,33 @@ class _SliverListWHeadersState extends State<SliverListWHeaders> {
                 )
               ],
             ),
-            MultiSliver(children: [
+            MultiSliver(
+                pushPinnedChildren: true,
+                children: [
               SliverPinnedHeader(
                 child: Container(
                   color: Colors.white,
-                  child: Text("Heading 1"),
+                  child: Text("Heading 1 moverr"),
                 ),
               ),
               SliverList(
                 delegate: SliverChildBuilderDelegate(
                   childCount: 50,
                   (context, index) => Text("Index $index"),
+                ),
+              ),
+            ]),
+            MultiSliver(children: [
+              SliverPinnedHeader(
+                child: Container(
+                  color: Colors.white,
+                  child: Text("Heading 1009 moverr"),
+                ),
+              ),
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  childCount: 50,
+                      (context, index) => Text("Index $index"),
                 ),
               ),
             ])
