@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 import 'chips.dart';
 import 'contacts_page.dart';
 import 'custom_button_page.dart';
+import 'indexed_stack_et_popscope.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -57,6 +58,11 @@ class HomePage extends StatelessWidget {
                 buttonText: "To Validator page",
                 onTap: () {
                   context.goNamed(PhoneValidatorPage.routeName);
+                }),
+            CustomButton(
+                buttonText: "To IndexedStackNPopScope page",
+                onTap: () {
+                  context.goNamed(IndexedStackNPopScope.routeName);
                 }),
           ],
         ),

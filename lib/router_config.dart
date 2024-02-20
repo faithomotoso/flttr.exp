@@ -2,6 +2,7 @@ import 'package:flttr_exp/ui/_ui.dart';
 import 'package:flttr_exp/ui/pages/animated_list_exmp.dart';
 import 'package:flttr_exp/ui/pages/chips.dart';
 import 'package:flttr_exp/ui/pages/contacts_page.dart';
+import 'package:flttr_exp/ui/pages/indexed_stack_et_popscope.dart';
 import 'package:flttr_exp/ui/pages/phone_validator.dart';
 import 'package:flttr_exp/ui/pages/sliver_list_w_headers.dart';
 import 'package:go_router/go_router.dart';
@@ -35,5 +36,9 @@ final GoRouter goRouterConfiguration = GoRouter(routes: [
             name: PhoneValidatorPage.routeName,
             path: PhoneValidatorPage.routeName,
             builder: (ctx, state) => const PhoneValidatorPage()),
+        GoRoute(
+            path: IndexedStackNPopScope.routeName,
+            name: IndexedStackNPopScope.routeName,
+            builder: (ctx, state) => const IndexedStackNPopScope())
       ]),
 ]);
