@@ -43,7 +43,8 @@ class _PhoneValidatorPageState extends State<PhoneValidatorPage> {
             ),
             if (isPhoneValid != null)
               Text("Phone Number is ${isPhoneValid! ? "Valid" : "Invalid"}"),
-            if ((isPhoneValid ?? false) && normalizedPhoneNumber != null) Text("Normalized phone number $normalizedPhoneNumber")
+            if ((isPhoneValid ?? false) && normalizedPhoneNumber != null)
+              Text("Normalized phone number $normalizedPhoneNumber")
           ],
         ),
       ),
@@ -58,7 +59,19 @@ class _PhoneValidatorPageState extends State<PhoneValidatorPage> {
     isPhoneValid = await PhoneNumberUtil.isValidPhoneNumber(
         phoneNumber: controller.text, isoCode: countryCode);
     try {
-      normalizedPhoneNumber = await PhoneNumberUtil.normalizePhoneNumber(phoneNumber: controller.text, isoCode: countryCode);
+      normalizedPhoneNumber = await PhoneNumberUtil.normalizePhoneNumber(
+              phoneNumber: controller.text, isoCode: countryCode)
+          .then((value) async {
+        print("Normalizing phone: $value");
+        print("Validating after normalizing");
+        await PhoneNumberUtil.isValidPhoneNumber(
+                phoneNumber: value!, isoCode: countryCode)
+            .then((value) {
+          print("Is normalized phone number valid: $value");
+          return value;
+        });
+        return value;
+      });
     } on Exception catch (e) {
       normalizedPhoneNumber = null;
     }
