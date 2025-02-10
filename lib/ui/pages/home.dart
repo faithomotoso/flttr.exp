@@ -1,3 +1,4 @@
+import 'package:flttr_exp/ui/pages/anims/anims_home.dart';
 import 'package:flttr_exp/ui/pages/phone_validator.dart';
 import 'package:flttr_exp/ui/pages/animated_list_exmp.dart';
 import 'package:flttr_exp/ui/pages/sliver_list_w_headers.dart';
@@ -63,6 +64,11 @@ class HomePage extends StatelessWidget {
                 buttonText: "To IndexedStackNPopScope page",
                 onTap: () {
                   context.goNamed(IndexedStackNPopScope.routeName);
+                }),
+            CustomButton(
+                buttonText: "To Anims page",
+                onTap: () {
+                  context.goNamed(AnimsHome.routeName);
                 }),
           ],
         ),

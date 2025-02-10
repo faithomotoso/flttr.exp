@@ -1,5 +1,8 @@
 import 'package:flttr_exp/ui/_ui.dart';
 import 'package:flttr_exp/ui/pages/animated_list_exmp.dart';
+import 'package:flttr_exp/ui/pages/anims/anims_home.dart';
+import 'package:flttr_exp/ui/pages/anims/basic_rotate.dart';
+import 'package:flttr_exp/ui/pages/anims/custom_drawer.dart';
 import 'package:flttr_exp/ui/pages/chips.dart';
 import 'package:flttr_exp/ui/pages/contacts_page.dart';
 import 'package:flttr_exp/ui/pages/indexed_stack_et_popscope.dart';
@@ -39,6 +42,20 @@ final GoRouter goRouterConfiguration = GoRouter(routes: [
         GoRoute(
             path: IndexedStackNPopScope.routeName,
             name: IndexedStackNPopScope.routeName,
-            builder: (ctx, state) => const IndexedStackNPopScope())
+            builder: (ctx, state) => const IndexedStackNPopScope()),
+        GoRoute(
+            path: AnimsHome.routeName,
+            name: AnimsHome.routeName,
+            builder: (ctx, state) => const AnimsHome(),
+            routes: [
+              GoRoute(
+                  path: BasicRotateExample.routeName,
+                  name: BasicRotateExample.routeName,
+                  builder: (ctx, state) => const BasicRotateExample()),
+              GoRoute(
+                  path: CustomDrawer.routeName,
+                  name: CustomDrawer.routeName,
+                  builder: (ctx, state) => const CustomDrawer()),
+            ]),
       ]),
 ]);
