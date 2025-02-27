@@ -1,5 +1,4 @@
 import 'package:flttr_exp/ui/pages/anims/anims_home.dart';
-import 'package:flttr_exp/ui/pages/phone_validator.dart';
 import 'package:flttr_exp/ui/pages/animated_list_exmp.dart';
 import 'package:flttr_exp/ui/pages/sliver_list_w_headers.dart';
 import 'package:flttr_exp/ui/widgets/custom_button.dart';
@@ -54,11 +53,6 @@ class HomePage extends StatelessWidget {
                 buttonText: "To chips example",
                 onTap: () {
                   context.goNamed(ChipsExample.routeName);
-                }),
-            CustomButton(
-                buttonText: "To Validator page",
-                onTap: () {
-                  context.goNamed(PhoneValidatorPage.routeName);
                 }),
             CustomButton(
                 buttonText: "To IndexedStackNPopScope page",
