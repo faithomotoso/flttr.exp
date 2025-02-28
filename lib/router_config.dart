@@ -3,6 +3,7 @@ import 'package:flttr_exp/ui/pages/animated_list_exmp.dart';
 import 'package:flttr_exp/ui/pages/anims/anims_home.dart';
 import 'package:flttr_exp/ui/pages/anims/basic_rotate.dart';
 import 'package:flttr_exp/ui/pages/anims/custom_drawer.dart';
+import 'package:flttr_exp/ui/pages/cancel_http_page.dart';
 import 'package:flttr_exp/ui/pages/chips.dart';
 import 'package:flttr_exp/ui/pages/contacts_page.dart';
 import 'package:flttr_exp/ui/pages/indexed_stack_et_popscope.dart';
@@ -52,5 +53,9 @@ final GoRouter goRouterConfiguration = GoRouter(routes: [
                   name: CustomDrawer.routeName,
                   builder: (ctx, state) => const CustomDrawer()),
             ]),
+        GoRoute(
+            path: CancelHttpPage.routeName,
+            name: CancelHttpPage.routeName,
+            builder: (ctx, state) => const CancelHttpPage())
       ]),
 ]);
