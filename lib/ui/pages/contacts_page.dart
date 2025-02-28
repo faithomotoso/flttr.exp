@@ -44,13 +44,13 @@ class _ContactsPageState extends State<ContactsPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Contacts"),
-        leading: IconButton(
-          onPressed: () {},
-          icon: const Icon(
-            Icons.menu_rounded,
-            color: Colors.lightBlueAccent,
-          ),
-        ),
+        // leading: IconButton(
+        //   onPressed: () {},
+        //   icon: const Icon(
+        //     Icons.menu_rounded,
+        //     color: Colors.lightBlueAccent,
+        //   ),
+        // ),
         actions: [
           IconButton(
             onPressed: () {},

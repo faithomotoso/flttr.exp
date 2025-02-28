@@ -19,7 +19,7 @@ class _IndexedStackNPopScopeState extends State<IndexedStackNPopScope> {
   @override
   Widget build(BuildContext context) {
     return PopScope(
-      canPop: false,
+      canPop: index == 0,
       child: IndexedStack(
         index: index,
         children: [
@@ -82,7 +82,11 @@ class _IndexesWidget extends StatelessWidget {
     );
 
     return onBackPressed != null
-        ? PopScope(onPopInvoked: onBackPressed, child: scaffold)
+        ? PopScope(
+            onPopInvokedWithResult: (didPop, result) {
+              onBackPressed?.call(didPop);
+            },
+            child: scaffold)
         : scaffold;
   }
 }

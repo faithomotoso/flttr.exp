@@ -22,7 +22,8 @@ class _CustomButtonState extends State<CustomButton>
   late Animation<Offset> offsetAnimation;
   final Offset shadowOffset = const Offset(6, 6);
   final ValueNotifier<bool> isHovering = ValueNotifier(false);
-  final Color hoverColor = Color.alphaBlend(Colors.pink.withOpacity(0.1), Colors.white);
+  final Color hoverColor =
+      Color.alphaBlend(Colors.pink.withValues(alpha: 0.1), Colors.white);
 
   @override
   void initState() {
@@ -70,18 +71,17 @@ class _CustomButtonState extends State<CustomButton>
               onHover: (h) {
                 isHovering.value = h;
               },
-              overlayColor: const MaterialStatePropertyAll<Color>(Colors.transparent),
+              overlayColor:
+                  const WidgetStatePropertyAll<Color>(Colors.transparent),
               child: Transform.translate(
-                  offset: offsetAnimation.value,
-                  child: child));
+                  offset: offsetAnimation.value, child: child));
         },
         child: ValueListenableBuilder<bool>(
           valueListenable: isHovering,
           builder: (ctx, hovering, child) {
             return AnimatedContainer(
               duration: const Duration(milliseconds: 200),
-              padding: const EdgeInsets.symmetric(
-                  vertical: 20, horizontal: 10),
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
               decoration: BoxDecoration(
                   color: hovering ? hoverColor : Colors.white,
                   borderRadius: BorderRadius.circular(14),

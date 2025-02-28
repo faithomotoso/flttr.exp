@@ -42,7 +42,7 @@ class MessageBox extends StatelessWidget {
         width: MediaQuery.of(context).size.width * 0.55,
         decoration: BoxDecoration(
             color: messageModel.isMeSender
-                ? Colors.grey.withOpacity(0.2)
+                ? Colors.grey.withValues(alpha: 0.2)
                 : Colors.blueAccent,
             borderRadius: BorderRadius.circular(12)),
         padding: const EdgeInsets.all(12),
