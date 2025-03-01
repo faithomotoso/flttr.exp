@@ -1,6 +1,8 @@
 import 'dart:developer';
 
 import 'package:async/async.dart';
+import 'package:dio/dio.dart' as dio;
+import 'package:flttr_exp/core/repository/dio_repository.dart';
 import 'package:flttr_exp/core/repository/http_repository.dart';
 import 'package:flttr_exp/ui/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
@@ -18,17 +20,17 @@ class CancelHttpPage extends StatefulWidget {
 class _CancelHttpPageState extends State<CancelHttpPage> {
   final ValueNotifier<bool> fetchingNotifier = ValueNotifier(false);
   final Client client = HttpRepository.instance.client;
+  final dio.Dio dioClient = DioRepository.instance.dio;
   final String url = "https://jsonplaceholder.typicode.com/posts";
   late final Uri uri;
   final ValueNotifier<String?> httpStrResponseNotifier = ValueNotifier(null);
 
   CancelableOperation<Response>? httpCancelable;
+  dio.CancelToken? cancelToken = dio.CancelToken();
 
   @override
   void initState() {
     super.initState();
-
-    print("CLient hashcode: ${client.hashCode}");
 
     uri = Uri.parse(url);
   }
@@ -47,6 +49,9 @@ class _CancelHttpPageState extends State<CancelHttpPage> {
       print("Cancel called: $v");
     });
 
+    // Works
+    cancelToken?.cancel();
+
     super.dispose();
   }
 
@@ -60,11 +65,18 @@ class _CancelHttpPageState extends State<CancelHttpPage> {
         padding: const EdgeInsets.all(12),
         children: [
           Row(
+            spacing: 12,
             children: [
               Expanded(
                 child: CustomButton(
                   buttonText: "http",
                   onTap: _withHttp,
+                ),
+              ),
+              Expanded(
+                child: CustomButton(
+                  buttonText: "dio",
+                  onTap: _withDio,
                 ),
               )
             ],
@@ -117,6 +129,30 @@ class _CancelHttpPageState extends State<CancelHttpPage> {
       }
     } finally {
       fetchingNotifier.value = false;
+    }
+  }
+
+  Future<void> _withDio() async {
+    if (fetchingNotifier.value) {
+      return;
+    }
+
+    try {
+      fetchingNotifier.value = true;
+      httpStrResponseNotifier.value = null;
+
+      dio.Response resp = await dioClient.get(url, cancelToken: cancelToken);
+
+      print("Fetched data with dio: ${resp.data.toString()}");
+
+      if (mounted) {
+        httpStrResponseNotifier.value = resp.data.toString();
+        fetchingNotifier.value = false;
+      }
+    } finally {
+      if (mounted) {
+        fetchingNotifier.value = false;
+      }
     }
   }
 }
