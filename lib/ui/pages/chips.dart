@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class ChipsExample extends StatefulWidget {
   static const String routeName = "chips";
@@ -9,8 +10,14 @@ class ChipsExample extends StatefulWidget {
   State<ChipsExample> createState() => _ChipsExampleState();
 }
 
-class _ChipsExampleState extends State<ChipsExample> {
-  List<int> selections = [];
+class _ChipsExampleState extends State<ChipsExample> with RestorationMixin {
+  RestorableList selections = RestorableList();
+
+  @override
+  void dispose() {
+    selections.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,14 +35,15 @@ class _ChipsExampleState extends State<ChipsExample> {
             ),
             ChoiceChip(
               label: Text("A choice"),
-              selected: selections.contains(1),
+              selected: selections.value.contains(1),
               disabledColor: Colors.white,
               onSelected: (selected) {
                 setState(() {
                   if (selected) {
-                    selections.add(1);
+                    ;
+                    selections.value = [...selections.value, 1];
                   } else {
-                    selections.remove(1);
+                    selections.value = List.from(selections.value..remove(1));
                   }
                 });
               },
@@ -46,11 +54,64 @@ class _ChipsExampleState extends State<ChipsExample> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(6)),
               padding: const EdgeInsets.all(8),
-              deleteIcon: Icon(Icons.close, color: Colors.black,),
+              deleteIcon: Icon(
+                Icons.close,
+                color: Colors.black,
+              ),
             )
           ],
         ),
       ),
     );
+  }
+
+  @override
+  String? get restorationId => "chips.restorable";
+
+  @override
+  void restoreState(RestorationBucket? oldBucket, bool initialRestore) {
+    registerForRestoration(selections, "chip.selected");
+  }
+}
+
+class RestorableList extends RestorableValue<List<int>> {
+  RestorableList() {
+    assert(debugIsSerializableForRestoration([]));
+  }
+
+  @override
+  List<int> createDefaultValue() {
+    return [];
+  }
+
+  @override
+  List<int> fromPrimitives(Object? data) {
+    assert(data != null);
+    if (data != null) {
+      return List<int>.from(data
+          .toString()
+          .split(",")
+          .where((v) => v.isNotEmpty)
+          .map((v) => int.parse(v)));
+    }
+
+    return [];
+  }
+
+  @override
+  void initWithValue(List<int> value) {
+    super.initWithValue(value);
+    this.value = value;
+  }
+
+  @override
+  Object? toPrimitives() {
+    return value.join(",");
+  }
+
+  @override
+  void didUpdateValue(List<int>? oldValue) {
+    assert(debugIsSerializableForRestoration(value));
+    notifyListeners();
   }
 }

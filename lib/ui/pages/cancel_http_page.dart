@@ -17,7 +17,7 @@ class CancelHttpPage extends StatefulWidget {
   State<CancelHttpPage> createState() => _CancelHttpPageState();
 }
 
-class _CancelHttpPageState extends State<CancelHttpPage> {
+class _CancelHttpPageState extends State<CancelHttpPage> with SingleTickerProviderStateMixin {
   final ValueNotifier<bool> fetchingNotifier = ValueNotifier(false);
   final Client client = HttpRepository.instance.client;
   final dio.Dio dioClient = DioRepository.instance.dio;

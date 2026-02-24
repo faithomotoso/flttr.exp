@@ -10,7 +10,9 @@ import 'package:flttr_exp/ui/pages/indexed_stack_et_popscope.dart';
 import 'package:flttr_exp/ui/pages/sliver_list_w_headers.dart';
 import 'package:go_router/go_router.dart';
 
-final GoRouter goRouterConfiguration = GoRouter(routes: [
+final GoRouter goRouterConfiguration = GoRouter(
+    restorationScopeId: "navi.restoration.id",
+    routes: [
   GoRoute(
       path: HomePage.routeName,
       builder: (ctx, state) => const HomePage(),

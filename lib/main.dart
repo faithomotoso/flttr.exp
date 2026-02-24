@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       routerConfig: goRouterConfiguration,
       title: 'Flttr Exp',
+      restorationScopeId: "app.restoration.id",
       theme: ThemeData(
         useMaterial3: true,
         primarySwatch: Colors.orange,
