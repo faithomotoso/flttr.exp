@@ -43,6 +43,7 @@ dependencies:
   cached_network_image: ^3.4.1
   http: ^1.6.0
   async: ^2.13.0
+  image_picker: ^1.2.1
 
 dev_dependencies:
   flutter_test:

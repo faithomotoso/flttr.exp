@@ -1,6 +1,7 @@
 import 'package:flttr_exp/ui/pages/anims/anims_home.dart';
 import 'package:flttr_exp/ui/pages/animated_list_exmp.dart';
 import 'package:flttr_exp/ui/pages/cancel_http_page.dart';
+import 'package:flttr_exp/ui/pages/restorable_form.dart';
 import 'package:flttr_exp/ui/pages/sliver_list_w_headers.dart';
 import 'package:flttr_exp/ui/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
@@ -71,7 +72,12 @@ class HomePage extends StatelessWidget {
                     buttonText: "To cancel http page",
                     onTap: () {
                       context.goNamed(CancelHttpPage.routeName);
-                    })
+                    }),
+                CustomButton(
+                    buttonText: "To restorable form page",
+                    onTap: () {
+                      context.goNamed(RestorableForm.routeName);
+                    }),
               ],
             ),
           ),
