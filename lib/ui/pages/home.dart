@@ -1,3 +1,4 @@
+import 'package:flttr_exp/main.dart';
 import 'package:flttr_exp/ui/pages/anims/anims_home.dart';
 import 'package:flttr_exp/ui/pages/animated_list_exmp.dart';
 import 'package:flttr_exp/ui/pages/cancel_http_page.dart';
@@ -12,11 +13,16 @@ import 'contacts_page.dart';
 import 'custom_button_page.dart';
 import 'indexed_stack_et_popscope.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   static const String routeName = "/";
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,5 +90,15 @@ class HomePage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  @override
+  void initState() {
+    WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((_) {
+      // testing that this gets triggered when navigation is restored
+      // scaffoldMessengerKey.currentState!.showSnackBar(
+      //     SnackBar(content: Text("Triggered home - testing restorable navi")));
+    });
+    super.initState();
   }
 }
